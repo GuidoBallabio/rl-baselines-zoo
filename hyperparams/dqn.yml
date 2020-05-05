@@ -46,3 +46,22 @@ Acrobot-v1:
   exploration_fraction: 0.1
   exploration_final_eps: 0.02
   prioritized_replay: True
+
+fieldservice-v0:
+  n_timesteps: !!float 2e5
+  policy: 'CustomDQNPolicy'
+  learning_rate: !!float 1e-3
+  buffer_size: 100000
+  exploration_fraction: 0.1
+  exploration_final_eps: 0.05
+  prioritized_replay: True
+  env_wrapper:
+    - gym_fieldservice.utils.wrappers.TimeLimit:
+        max_episode_steps: 1000
+    - gym_fieldservice.utils.wrappers.NormalizeReward
+    - gym_fieldservice.utils.wrappers.ExtractDistance
+    - gym_fieldservice.utils.wrappers.RescaleObservation:
+        a: -1.0
+        b: 1.0
+    - gym_fieldservice.utils.wrappers.RavelMultiDiscrete
+
